@@ -1,4 +1,11 @@
+
 import { useState, useEffect, useRef } from "react";
+import Hero from "./components/Hero";
+import NavTabs from "./components/NavTabs";
+import AboutSection from "./components/AboutSection";
+import ExperienceSection from "./components/ExperienceSection";
+import SkillsSection from "./components/SkillsSection";
+import EducationSection from "./components/EducationSection";
 
 const profile = {
   name: "PRANALI BABHULGAONKAR",
@@ -338,178 +345,17 @@ export default function App() {
       </div>
 
       {/* Hero */}
-      <div className="hero">
-        <div style={{ position:"relative", zIndex:2 }}>
-          <div className="avatar-wrap" style={{ animation: ready ? "scaleIn 0.7s cubic-bezier(.2,.8,.3,1.2) both" : "none" }}>
-            <div className="avatar-ring" /><div className="avatar-ring" /><div className="avatar-ring" />
-            <div className="avatar">
-              <img src="/profile.jpg" alt="Pranali Babhulgaonkar" onError={(e) => { e.target.style.display='none'; e.target.parentNode.innerHTML='PB'; }} />
-            </div>
-            <div className="orbit-dot" /><div className="orbit-dot" />
-          </div>
-          <div style={{ textAlign:"center", animation: ready ? "slideUp 0.6s ease 0.3s both" : "none" }}>
-            <div className="hero-name-wrap">
-              <span className="hero-name">{profile.name}</span>
-              <div className="hero-name-line" />
-            </div>
-          </div>
-          <div style={{ overflow:"hidden", textAlign:"center", marginTop:6 }}>
-            <div className="hero-title">{profile.title}</div>
-          </div>
-          <div className="hero-loc">📍 {profile.location}</div>
-          <div className="contact-row">
-            {[`📧 ${profile.email}`,`📱 ${profile.phone}`,"🔗 LinkedIn"].map((c,i) => (
-              <span key={i} className="chip">{c}</span>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Hero profile={profile} ready={ready} />
 
       {/* Nav */}
-      <nav className="nav">
-        {tabs.map(t => (
-          <button key={t} className={`tab ${active===t?"active":""}`} onClick={() => setActive(t)}>
-            {tabIcons[t]}
-          </button>
-        ))}
-      </nav>
+      <NavTabs tabs={tabs} active={active} setActive={setActive} tabIcons={tabIcons} />
 
       {/* Content */}
       <div className="section">
-        {active==="About" && (
-          <div>
-            <AnimCard>
-              <h3 className="section-title">whoami</h3>
-              <p style={{ lineHeight:1.8, color:"#8892a4", fontSize:14, margin:0 }}>{profile.summary}</p>
-            </AnimCard>
-            <AnimCard delay={0.15}>
-              <h3 className="section-title">stats --verbose</h3>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))", gap:14 }}>
-                {[{l:"Experience",v:"5 Years",icon:"💼",d:0},{l:"Domain",v:"Fintech",icon:"🏦",d:1},{l:"Companies",v:"2",icon:"🏢",d:2},{l:"CGPA",v:"8.29",icon:"🎓",d:3}].map(q => (
-                  <div key={q.l} className="stat-card" style={{ animation:`scaleIn 0.5s ease ${0.3+q.d*0.12}s both` }}>
-                    <div className="stat-icon" style={{ animationDelay:`${q.d*0.5}s` }}>{q.icon}</div>
-                    <div className="stat-val">{q.v}</div>
-                    <div style={{ fontSize:11, color:"#4a5568", marginTop:3, fontFamily:"'Courier New',monospace" }}>{q.l}</div>
-                  </div>
-                ))}
-              </div>
-            </AnimCard>
-            <AnimCard delay={0.3}>
-              <h3 className="section-title">tech.stack()</h3>
-              <div style={{ display:"flex", flexWrap:"wrap", gap:6 }}>
-                {Object.values(profile.skills).flat().map((sk,i) => (
-                  <span key={sk} className="badge" style={{ background:"rgba(134,182,246,0.08)", color:"#86B6F6", border:"1px solid rgba(134,182,246,0.15)", animation:`fadeInStagger 0.4s ease ${0.05*i}s both` }}>{sk}</span>
-                ))}
-              </div>
-            </AnimCard>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
-              <AnimCard delay={0.4}>
-                <h3 className="section-title" style={{fontSize:14}}>publication</h3>
-                <div className="pub-card">
-                  <div style={{ fontWeight:700, color:"#e2e8f0", fontSize:13 }}>{profile.publications[0].title}</div>
-                  <div style={{ fontSize:11, color:"#4a5568", marginTop:4 }}>{profile.publications[0].source} · {profile.publications[0].date}</div>
-                </div>
-              </AnimCard>
-              <AnimCard delay={0.5}>
-                <h3 className="section-title" style={{fontSize:14}}>certifications[{profile.certifications.length}]</h3>
-                {profile.certifications.map((cert,ci) => {
-                  const colors=["#B6F686","#86B6F6","#F6D686","#F686B6"];
-                  return <div key={ci} className="pub-card" style={{ borderLeftColor:colors[ci%colors.length], marginBottom:ci<profile.certifications.length-1?10:0 }}>
-                    <div style={{ fontWeight:700, color:"#e2e8f0", fontSize:13 }}>{cert.title}</div>
-                    <div style={{ fontSize:11, color:"#4a5568", marginTop:4, display:"flex", justifyContent:"space-between" }}>
-                      <span>{cert.source}</span><span style={{color:colors[ci%colors.length]}}>{cert.date}</span>
-                    </div>
-                  </div>;
-                })}
-              </AnimCard>
-            </div>
-          </div>
-        )}
-
-        {active==="Experience" && (
-          <div className="timeline">
-            {profile.experience.map((exp,i) => (
-              <div key={i} style={{ marginBottom:22, position:"relative", animation:`slideLeft 0.5s ease ${i*0.15}s both` }}>
-                <div className="tl-dot" style={{ background:exp.color, boxShadow:`0 0 14px ${exp.color}66` }} />
-                <div className="card tl-card" onClick={() => setExpOpen(expOpen===i?-1:i)} style={{ borderLeftColor:exp.color, marginBottom:0 }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:8 }}>
-                    <div>
-                      <div style={{ fontSize:16, fontWeight:800, color:"#e2e8f0" }}>{exp.icon} {exp.company}</div>
-                      <div style={{ fontSize:13, color:exp.color, marginTop:3, fontWeight:600, fontFamily:"'Courier New',monospace" }}>{exp.role}</div>
-                    </div>
-                    <div style={{ textAlign:"right" }}>
-                      <div style={{ fontSize:11, color:"#4a5568", background:"rgba(255,255,255,0.03)", padding:"3px 10px", borderRadius:4, fontFamily:"'Courier New',monospace" }}>{exp.period}</div>
-                      <div style={{ fontSize:11, color:"#4a5568", marginTop:4 }}>📍 {exp.location}</div>
-                    </div>
-                  </div>
-                  <div style={{ overflow:"hidden", maxHeight:expOpen===i?600:0, transition:"max-height 0.5s cubic-bezier(.4,0,.2,1)", marginTop:expOpen===i?14:0 }}>
-                    {exp.highlights.map((h,j) => (
-                      <div key={j} className="highlight-row" style={{ animation:expOpen===i?`fadeInStagger 0.4s ease ${j*0.08}s both`:"none" }}>
-                        <span className="highlight-arrow" style={{ color:exp.color }}>▸</span><span>{h}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ textAlign:"center", marginTop:10, fontSize:16, color:"#2a3545", transition:"transform 0.3s", transform:expOpen===i?"rotate(180deg)":"rotate(0)" }}>⌄</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {active==="Skills" && (
-          <div>
-            {Object.entries(profile.skills).map(([cat,items],ci) => (
-              <AnimCard key={cat} delay={ci*0.12}>
-                <h3 className="section-title">{cat==="Backend"?"⚙️":cat==="Frontend"?"🎨":cat==="Databases"?"🗄️":"🛠️"} {cat.toLowerCase()}</h3>
-                {items.map((sk,si) => <SkillBar key={sk} name={sk} pct={skillPcts[sk]||80} delay={ci*0.2+si*0.1} />)}
-              </AnimCard>
-            ))}
-            <AnimCard delay={0.6}>
-              <h3 className="section-title">import * from 'skills'</h3>
-              <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
-                {Object.values(profile.skills).flat().map((sk,i) => {
-                  const colors=["#86B6F6","#B6F686","#F6D686","#F686B6"]; const c=colors[i%colors.length];
-                  return <span key={sk} className="badge" style={{ background:`${c}12`, color:c, border:`1px solid ${c}25`, animation:`fadeInStagger 0.3s ease ${i*0.05}s both` }}>{sk}</span>;
-                })}
-              </div>
-            </AnimCard>
-          </div>
-        )}
-
-        {active==="Education" && (
-          <div>
-            <AnimCard>
-              <div style={{ display:"flex", gap:18, alignItems:"flex-start" }}>
-                <div className="edu-icon">🎓</div>
-                <div>
-                  <div style={{ fontSize:17, fontWeight:800, color:"#e2e8f0" }}>{profile.education.university}</div>
-                  <div style={{ fontSize:13, color:"#86B6F6", marginTop:5, fontWeight:600, fontFamily:"'Courier New',monospace" }}>{profile.education.degree}</div>
-                  <div style={{ marginTop:8, display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
-                    <span className="badge" style={{ background:"rgba(182,246,134,0.1)", color:"#B6F686", border:"1px solid rgba(182,246,134,0.2)", fontSize:12, fontWeight:700 }}>{profile.education.cgpa}</span>
-                    <span style={{ fontSize:12, color:"#4a5568", fontFamily:"'Courier New',monospace" }}>{profile.education.period} · {profile.education.location}</span>
-                  </div>
-                </div>
-              </div>
-            </AnimCard>
-            <AnimCard delay={0.15}>
-              <h3 className="section-title">research.publish()</h3>
-              <div className="pub-card"><div style={{ fontWeight:700, color:"#e2e8f0", fontSize:14 }}>{profile.publications[0].title}</div><div style={{ fontSize:12, color:"#4a5568", marginTop:5, fontFamily:"'Courier New',monospace" }}>{profile.publications[0].source} · {profile.publications[0].date}</div></div>
-            </AnimCard>
-            <AnimCard delay={0.3}>
-              <h3 className="section-title">cert.verifyAll({profile.certifications.length})</h3>
-              {profile.certifications.map((cert,ci) => {
-                const colors=["#B6F686","#86B6F6","#F6D686","#F686B6"];
-                return <div key={ci} className="pub-card" style={{ borderLeftColor:colors[ci%colors.length], marginBottom:ci<profile.certifications.length-1?10:0, animation:`fadeInStagger 0.4s ease ${0.3+ci*0.1}s both` }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:6 }}>
-                    <div style={{ fontWeight:700, color:"#e2e8f0", fontSize:14 }}>{cert.title}</div>
-                    <span className="badge" style={{ background:`${colors[ci%colors.length]}15`, color:colors[ci%colors.length], border:`1px solid ${colors[ci%colors.length]}30`, margin:0 }}>{cert.source}</span>
-                  </div>
-                  <div style={{ fontSize:12, color:"#4a5568", marginTop:5, fontFamily:"'Courier New',monospace" }}>{cert.date}</div>
-                </div>;
-              })}
-            </AnimCard>
-          </div>
-        )}
+        {active === "About" && <AboutSection profile={profile} />}
+        {active === "Experience" && <ExperienceSection profile={profile} />}
+        {active === "Skills" && <SkillsSection profile={profile} />}
+        {active === "Education" && <EducationSection profile={profile} />}
       </div>
 
       <div className="footer">
