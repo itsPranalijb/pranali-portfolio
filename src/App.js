@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Hero from "./components/Hero";
 import NavTabs from "./components/NavTabs";
 import AboutSection from "./components/AboutSection";
