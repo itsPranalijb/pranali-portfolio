@@ -214,7 +214,7 @@ function highlightCode(code) {
       }
     });
     // strings
-    const tokens = remaining.split(/(\"[^\"]*\")/g);
+    const tokens = remaining.split(/("[^"]*")/g);
     tokens.forEach(tok => {
       if (tok.startsWith('"') && tok.endsWith('"')) {
         parts.push(<span key={key++} className="str">{tok}</span>);
@@ -263,7 +263,7 @@ const TypingColumn = ({ snippet, left, speed, startDelay }) => {
     };
     start();
     return () => clearTimeout(timeout);
-  }, []);
+  }, [full.length, speed, startDelay]);
   const visible = full.slice(0, charCount);
   const lines = visible.split('\n');
   return (
@@ -301,31 +301,13 @@ const CodeBackground = () => {
   );
 };
 
-const AnimCard = ({ children, delay = 0, style = {}, className = "" }) => {
-  const [v, setV] = useState(false);
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect(); } }, { threshold: 0.15 });
-    obs.observe(el); return () => obs.disconnect();
-  }, []);
-  return <div ref={ref} className={`card ${className}`} style={{ ...style, animation: v ? `slideUp 0.6s ease ${delay}s both` : "none", opacity: v ? undefined : 0 }}>{children}</div>;
-};
-
-const SkillBar = ({ name, pct, delay }) => (
-  <div className="skill-bar-wrap" style={{ animation: `fadeInStagger 0.5s ease ${delay}s both` }}>
-    <div className="skill-label"><span>{name}</span><span className="skill-pct">{pct}%</span></div>
-    <div className="skill-track"><div className="skill-fill" style={{ "--bar-w": pct + "%", animationDelay: delay + "s" }} /></div>
-  </div>
-);
-
-const skillPcts = { Java:95,"Spring Boot":92,"Spring DataJPA":88,Hibernate:85,Microservices:90,"REST APIs":94,React:91,JavaScript:93,HTML5:90,CSS3:88,MySQL:89,PostgreSQL:84,Git:92,"VS Code":90,Postman:88,"SQL WorkBench":82,AWS:78 };
+// AnimCard, SkillBar, skillPcts are now unused after refactor and removed.
 const tabIcons = { About:"~/about", Experience:"~/experience", Skills:"~/skills", Education:"~/education" };
 const tabs = ["About","Experience","Skills","Education"];
 
 export default function App() {
   const [active, setActive] = useState("About");
-  const [expOpen, setExpOpen] = useState(0);
+  // expOpen and setExpOpen are unused after refactor and removed.
   const [ready, setReady] = useState(false);
   useEffect(() => { setTimeout(() => setReady(true), 150); }, []);
 
