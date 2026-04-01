@@ -22,9 +22,10 @@ export default function Hero({ profile, ready }) {
         </div>
         <div className="hero-loc">📍 {profile.location}</div>
         <div className="contact-row">
-          {[`📧 ${profile.email}`, `📱 ${profile.phone}`, "🔗 LinkedIn"].map((c, i) => (
-            <span key={i} className="chip">{c}</span>
-          ))}
+          <a className="chip" href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.email)}`} target="_blank" rel="noopener noreferrer">📧 {profile.email}</a>
+          <a className="chip" href={`tel:${profile.phone.replace(/[^+0-9]/g, '')}`}>📱 {profile.phone}</a>
+          <a className="chip" href={profile.linkedin || `https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(profile.name)}`} target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+          <a className="chip" href={profile.github || `https://github.com/${encodeURIComponent(profile.name.replace(/\s+/g, ''))}`} target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
         </div>
       </div>
     </div>

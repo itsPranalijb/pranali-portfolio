@@ -14,6 +14,7 @@ const profile = {
   phone: "+91-9146132605",
   email: "itspranalijb@gmail.com",
   linkedin: "https://www.linkedin.com/in/pranalijbabhulgaonkar/",
+  github: "https://github.com/itsPranalijb",
   summary: "Passionate Full-Stack Developer with 5 years of experience delivering scalable, high-performance applications using Java, Spring Boot, and React. Proven expertise in building robust RESTful APIs and responsive user interfaces in the fintech domain.",
   skills: {
     Backend: ["Java","Spring Boot","Spring DataJPA","Hibernate","Microservices","REST APIs"],
