@@ -8,7 +8,7 @@ import SkillsSection from "./components/SkillsSection";
 import EducationSection from "./components/EducationSection";
 
 const profile = {
-  name: "PRANALI BABHULGAONKAR",
+  name: "PRANALI J. BABHULGAONKAR",
   title: "Senior Full-Stack Developer",
   location: "Mumbai, Maharashtra, India",
   phone: "+91-9146132605",
