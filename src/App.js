@@ -127,8 +127,9 @@ const CSS = `
   .hero-loc { font-size:13px; color:#6b7c93; margin-top:10px; animation:slideUp 0.8s ease 1s both; }
 
   .contact-row { display:flex; justify-content:center; gap:10px; margin-top:18px; flex-wrap:wrap; animation:slideUp 0.8s ease 1.2s both; }
-  .chip { font-size:11px; padding:7px 14px; border-radius:6px; background:rgba(134,182,246,0.06); border:1px solid rgba(134,182,246,0.15); color:#86B6F6; cursor:pointer; transition:all 0.3s; font-family:'Courier New',monospace; animation:borderGlow 3s ease-in-out infinite; }
+  .chip { font-size:11px; padding:7px 14px; border-radius:6px; background:rgba(134,182,246,0.06); border:1px solid rgba(134,182,246,0.15); color:#86B6F6; cursor:pointer; transition:all 0.3s; font-family:'Courier New',monospace; animation:borderGlow 3s ease-in-out infinite; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
   .chip:hover { background:rgba(134,182,246,0.15); transform:translateY(-2px); box-shadow:0 4px 15px rgba(134,182,246,0.15); }
+  .chip, .chip:link, .chip:visited, .chip:hover, .chip:active { text-decoration:none; }
 
   .nav { display:flex; justify-content:center; gap:4px; padding:10px 16px; flex-wrap:wrap; z-index:10; background:rgba(10,14,20,0.8); backdrop-filter:blur(12px); border-bottom:1px solid rgba(134,182,246,0.06); }
   .tab { padding:9px 20px; font-size:13px; border:none; cursor:pointer; border-radius:6px; transition:all 0.35s; background:transparent; color:#4a5568; font-weight:500; font-family:'Courier New',monospace; position:relative; }
